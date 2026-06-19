@@ -6,9 +6,9 @@ import {
     Route,
 } from "react-router-dom";
 import { Layout } from "./pages/Layout";
-import { Home } from "./pages/Home";
-import { Single } from "./pages/Single";
-import { Demo } from "./pages/Demo";
+import  Home  from "./pages/Home";
+import CreateTodoPage from "./pages/CreateTodoPage";
+import EditTodoPage from "./pages/EditTodoPage";
 
 export const router = createBrowserRouter(
     createRoutesFromElements(
@@ -23,8 +23,8 @@ export const router = createBrowserRouter(
 
         {/* Nested Routes: Defines sub-routes within the BaseHome component. */}
         <Route path= "/" element={<Home />} />
-        <Route path="/create-contact" element={<Demo />} />
-        <Route path="/edit-contact/:id" element={ <Single />} />  {/* Dynamic route for single items */}
+        <Route path="/create-todo" element={<CreateTodoPage />} />
+        <Route path="/edit-todo/:id" element={ <EditTodoPage />} />  {/* Dynamic route for single items */}
       </Route>
     )
 );
