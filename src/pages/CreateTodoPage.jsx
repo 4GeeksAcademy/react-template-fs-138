@@ -3,6 +3,7 @@ import TodoForm from "../components/TodoForm";
 import useGlobalReducer from "../hooks/useGlobalReducer";
 import todoListServices from "../services/todoListServices";
 import { Link } from "react-router-dom";
+import toast from "react-hot-toast";
 
 export default function CreateTodoPage(){
 const { dispatch} =useGlobalReducer()
@@ -11,11 +12,18 @@ const navigate = useNavigate()
 	async function handleAddTask(event,todo,setTodo) {
 		event.preventDefault()
 
-        const data = await todoListServices.createTask(todo)    
-        console.log(data)
-        dispatch({type:'add_new_task',payload:data})
+        const [responseData,error] = await todoListServices.createTask(todo)    
+
+        if(error){
+            toast.error(error.message)
+            return navigate('/')   
+        }
+
+        console.log(responseData)
+        dispatch({type:'add_new_task',payload:responseData})
 		setTodo("")
         navigate('/')
+        toast.success("Se ha creado la tarea correctamente")
 	}
 
     return(

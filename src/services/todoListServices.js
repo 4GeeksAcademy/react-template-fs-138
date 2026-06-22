@@ -21,25 +21,37 @@ async function createUser() {
 
     })
     if (response.ok === true) {
-        return await getTodoList()
+        return await getAllTodoList()
     }
 
 }
 
+
+//DEVUELVO UN ARRAY [RESPONSE,ERROR]
 async function createTask(todo) {
+    try{
+        const response = await fetch(`https://playground.4geeks.com/todo/todos/${userName}`, {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(
+                { label: todo, is_done: false }
+            )
+        })
 
-    const response = await fetch(`https://playground.4geeks.com/todo/todos/${userName}`, {
-        method: 'POST',
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(
-            { label: todo, is_done: false }
-        )
-    })
-    const data = await response.json()
-
-    return data
+        
+        const data = await response.json()
+        
+        if(!response.ok){
+            console.log({response,data})
+            throw new Error (`Error ${response.status}: ${data.detail}`)
+        }
+        
+        return [data,null]
+    }catch(error){
+        return [null,error]
+    }
 }
 
 async function editTask(id, editTodo) {

@@ -5,6 +5,7 @@ import { Check, Edit, Trash2, X } from "lucide-react";
 import todoListServices from "../services/todoListServices";
 import useGlobalReducer from "../hooks/useGlobalReducer";
 import { Link } from "react-router-dom";
+import toast from "react-hot-toast";
 
 
 //create your first component
@@ -21,6 +22,7 @@ const Home = () => {
 		if (data) {
 			dispatch({ type: 'delete_task', payload: store.todosList.find(todo => todo.id === id) })
 		}
+		toast.success("Se ha eliminado correctamente")
 
 	}
 
